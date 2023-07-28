@@ -17,7 +17,6 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  
   - task: DockerInstaller@0
     inputs:
       dockerVersion: '17.09.0-ce'
@@ -27,11 +26,11 @@ steps:
       azureSubscriptionEndpoint: Myserviceconnection
       azureContainerRegistry: testjar.azurecr.io
       command: 'Build an image'
+      imageName: '$(containerRegistry)/$(imageRepository):$(tag)'  # <-- Set the desired image name here
   - task: Docker@1
     displayName: 'Push an image'
     inputs:
       azureSubscriptionEndpoint: Myserviceconnection
       azureContainerRegistry: testjar.azurecr.io
-      imageName: 'azurejar'
+      imageName: '$(containerRegistry)/$(imageRepository):$(tag)'  # <-- Use the same image name for pushing
       command: 'Push an image'
-      
